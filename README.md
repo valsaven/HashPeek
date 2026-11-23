@@ -32,7 +32,9 @@ The shell extension is `HashPeek\bin\Release\net48\HashPeek.dll`.
 
 ## Install
 
-No third-party installer is needed. SharpShell has a `[ComRegisterFunction]`, so the built-in `regasm.exe` from .NET Framework also registers the Explorer property sheet handler. Open PowerShell **as Administrator** (writing HKCR requires it) and run:
+The easiest option is the signed `HashPeek-Setup.exe` from the [latest release](https://github.com/valsaven/HashPeek/releases/latest). Double-click it, confirm UAC, and HashPeek appears in **Settings → Apps → Installed apps**. **The installer stops and restarts Windows Explorer**, so save anything open in File Explorer first. Uninstall from the same Settings page.
+
+Manual install without an installer is also possible. SharpShell has a `[ComRegisterFunction]`, so the built-in `regasm.exe` from .NET Framework also registers the Explorer property sheet handler. Open PowerShell **as Administrator** (writing HKCR requires it) and run:
 
 ```powershell
 & "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\regasm.exe" /codebase 'G:\dev\HashPeek\HashPeek\bin\Release\net48\HashPeek.dll'
