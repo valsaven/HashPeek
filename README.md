@@ -2,18 +2,20 @@
 
 A Windows Explorer property sheet tab that shows file hashes. Built with SharpShell on .NET Framework 4.8.
 
+![HashPeek screenshot](screenshot.png)
+
 Hashes are computed in one pass over the file, on a background thread:
 
-| Algorithm | Notes |
-| --- | --- |
-| SHA-1 | Legacy checksums |
-| SHA-256 | Primary checksum |
-| SHA-512 | |
-| MD5 | Legacy sum files |
-| CRC32 | Printed big-endian, like `crc32` tools |
-| xxHash64 | Seed 0, printed like `xxhsum` |
-| XXH3_64 | Seed 0, printed like `xxhsum -H3` |
-| BLAKE3 | Via the .NET Framework build of `SAIB.Blake2Fast` |
+| Algorithm | Notes                                             |
+|-----------|---------------------------------------------------|
+| SHA-1     | Legacy checksums                                  |
+| SHA-256   | Primary checksum                                  |
+| SHA-512   |                                                   |
+| MD5       | Legacy sum files                                  |
+| CRC32     | Printed big-endian, like `crc32` tools            |
+| xxHash64  | Seed 0, printed like `xxhsum`                     |
+| XXH3_64   | Seed 0, printed like `xxhsum -H3`                 |
+| BLAKE3    | Via the .NET Framework build of `SAIB.Blake2Fast` |
 
 The `SAIB.Blake2Fast` package is a fork that adds BLAKE3 and still targets .NET Framework 4.6; the original `SauceControl.Blake2Fast` package does not provide BLAKE3 on .NET Framework. `System.IO.Hashing` is pinned to 8.0.0 on purpose: it has `XxHash3` and references the same `System.Memory`/`Unsafe` assembly versions as `SAIB.Blake2Fast`, so Explorer can load the extension without binding redirects. All hashes are verified against known vectors in the tests.
 
