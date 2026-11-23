@@ -6,13 +6,16 @@ Hashes are computed in one pass over the file, on a background thread:
 
 | Algorithm | Notes |
 | --- | --- |
+| SHA-1 | Legacy checksums |
 | SHA-256 | Primary checksum |
 | SHA-512 | |
 | MD5 | Legacy sum files |
 | CRC32 | Printed big-endian, like `crc32` tools |
 | xxHash64 | Seed 0, printed like `xxhsum` |
+| XXH3_64 | Seed 0, printed like `xxhsum -H3` |
+| BLAKE3 | Via the .NET Framework build of `SAIB.Blake2Fast` |
 
-BLAKE3 is intentionally not included: the maintained .NET package requires .NET 8, while SharpShell requires .NET Framework.
+The `SAIB.Blake2Fast` package is a fork that adds BLAKE3 and still targets .NET Framework 4.6; the original `SauceControl.Blake2Fast` package does not provide BLAKE3 on .NET Framework. All hashes are verified against known vectors in the tests.
 
 ## Build
 
@@ -45,9 +48,11 @@ Then restart Explorer again. Use the `Framework\v4.0.30319` path instead if Expl
 
 ## Usage
 
-Select one file, open **Properties**, and switch to the **Hashes** tab. The page shows `Calculating...` with progress until all hashes are ready, and each row has a **Copy** button. If calculation fails, the error appears at the top of the page.
+Select one file, open **Properties**, and switch to the **Hashes** tab. The page shows `Calculating...` with progress until all hashes are ready. Each row has a small copy-icon button; hovering it shows `Copy to clipboard`. If calculation fails, the error appears at the top of the page.
 
 The tab only appears for a single selected file, not for folders or multiple selections.
+
+Explorer keeps the registered DLL loaded. Restart Explorer (or sign out) before rebuilding the extension, otherwise the build cannot replace `HashPeek.dll`.
 
 ## License
 
