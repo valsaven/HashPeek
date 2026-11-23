@@ -1,0 +1,30 @@
+## Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Pp]ublish/
+artifacts/
+
+## Visual Studio / Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.DotSettings.user
+
+## Test results
+[Tt]est[Rr]esults/
+*.trx
+*.coverage
+*.coveragexml
+
+## NuGet
+*.nupkg
+packages/
+
+## OS files
+Thumbs.db
+desktop.ini
+.DS_Store
