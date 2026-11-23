@@ -27,10 +27,12 @@ The shell extension is `HashPeek\bin\Release\net48\HashPeek.dll`.
 
 ## Install
 
-Get `srm.exe` (Server Registration Manager) from a [SharpShell release](https://github.com/dwmkerr/sharpshell/releases) or the `ServerRegistrationManager` NuGet package, then register the DLL with the bitness of your Explorer process:
+Download `ServerRegistrationManager.zip` from the [SharpShell v2.7.2.0 release](https://github.com/dwmkerr/sharpshell/releases/tag/v2.7.2.0) (or install the `ServerRegistrationManager` NuGet package) and extract it somewhere, for example `C:\Tools\SharpShell`. SharpShell docs call this tool `srm`, but the actual executable is `ServerRegistrationManager.exe`. It requires administrator rights, so open PowerShell **as Administrator**.
+
+Register the DLL with the bitness of your Explorer process:
 
 ```powershell
-srm install .\HashPeek\bin\Release\net48\HashPeek.dll -codebase -os64
+& 'C:\Tools\SharpShell\ServerRegistrationManager.exe' install 'G:\dev\HashPeek\HashPeek\bin\Release\net48\HashPeek.dll' -codebase -os64
 ```
 
 Restart Explorer (or sign out) afterwards. `-codebase` means the DLL must stay at that path; do not move or delete it while registered. For 32-bit Explorer use `-os32`.
@@ -38,7 +40,7 @@ Restart Explorer (or sign out) afterwards. `-codebase` means the DLL must stay a
 To uninstall:
 
 ```powershell
-srm uninstall .\HashPeek\bin\Release\net48\HashPeek.dll -os64
+& 'C:\Tools\SharpShell\ServerRegistrationManager.exe' uninstall 'G:\dev\HashPeek\HashPeek\bin\Release\net48\HashPeek.dll' -os64
 ```
 
 Then restart Explorer again.
