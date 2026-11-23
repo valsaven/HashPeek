@@ -15,7 +15,7 @@ Hashes are computed in one pass over the file, on a background thread:
 | XXH3_64 | Seed 0, printed like `xxhsum -H3` |
 | BLAKE3 | Via the .NET Framework build of `SAIB.Blake2Fast` |
 
-The `SAIB.Blake2Fast` package is a fork that adds BLAKE3 and still targets .NET Framework 4.6; the original `SauceControl.Blake2Fast` package does not provide BLAKE3 on .NET Framework. All hashes are verified against known vectors in the tests.
+The `SAIB.Blake2Fast` package is a fork that adds BLAKE3 and still targets .NET Framework 4.6; the original `SauceControl.Blake2Fast` package does not provide BLAKE3 on .NET Framework. `System.IO.Hashing` is pinned to 8.0.0 on purpose: it has `XxHash3` and references the same `System.Memory`/`Unsafe` assembly versions as `SAIB.Blake2Fast`, so Explorer can load the extension without binding redirects. All hashes are verified against known vectors in the tests.
 
 ## Build
 
