@@ -24,17 +24,18 @@ public sealed class HashPropertyPage : SharpPropertyPage
         {
             Dock = DockStyle.Fill,
             ColumnCount = 3,
-            RowCount = names.Length + 1,
+            RowCount = names.Length + 2,
             Padding = new Padding(12)
         };
         table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 84));
         table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
         table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 28));
         table.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-        for (var row = 1; row < table.RowCount; row++)
+        for (var row = 1; row <= names.Length; row++)
         {
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, 26));
         }
+        table.RowStyles.Add(new RowStyle(SizeType.Percent, 100)); // absorbs leftover height
 
         statusLabel = new Label { Text = "Ready", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
         table.Controls.Add(statusLabel, 0, 0);
