@@ -5,6 +5,8 @@
 [Rr]elease/
 [Pp]ublish/
 artifacts/
+*-Setup.exe
+build.local.ps1
 
 ## Visual Studio / Rider
 .vs/

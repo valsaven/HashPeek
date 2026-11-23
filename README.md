@@ -54,6 +54,37 @@ The tab only appears for a single selected file, not for folders or multiple sel
 
 Explorer keeps the registered DLL loaded. Restart Explorer (or sign out) before rebuilding the extension, otherwise the build cannot replace `HashPeek.dll`.
 
+## Package for users
+
+NSIS 3 is enough; no other installer framework is needed. One command builds, signs and verifies everything:
+
+```powershell
+.\build.ps1
+```
+
+It compiles the solution, signs `HashPeek.dll` (so NSIS embeds an already-signed DLL), builds the installer, then signs and verifies both files. The signing identity is not committed — create `build.local.ps1` next to `build.ps1` once:
+
+```powershell
+$Thumbprint = '<your certificate SHA-1>'
+$SignTool = 'signtool.exe'
+```
+
+That file is gitignored. You can also pass `-Thumbprint <sha1> -SignTool <path>` directly. The version fields on `HashPeek-Setup.exe` are set by the `VI...` lines at the top of `HashPeek.nsi`.
+
+`HashPeek-Setup.exe` copies the DLLs to `C:\Program Files\HashPeek`, registers the COM server, and adds **HashPeek** to Settings → Apps → Installed apps. Uninstall from there. Both installer and uninstaller stop and restart Explorer automatically, so save anything open in File Explorer first. UAC elevation is required: Explorer writes to HKCR.
+
+The script targets 64-bit Windows Explorer (`Framework64\regasm.exe`). For 32-bit Explorer, change `REGASM` in `HashPeek.nsi` to the `Framework\v4.0.30319` path.
+
+## Remove the manual registration
+
+If you registered the DLL by hand with `regasm`, remove it from an elevated PowerShell before switching to the installer:
+
+```powershell
+& "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\regasm.exe" /unregister 'G:\dev\HashPeek\HashPeek\bin\Release\net48\HashPeek.dll'
+```
+
+Restart Explorer afterwards. SharpShell's unregister callback removes the `ShellEx\PropertySheetHandlers\HashPropertySheet` key as well. Alternatively, just run the installer: it re-registers the same CLSID from the new location.
+
 ## License
 
 GPL-3.0. See [LICENSE](LICENSE).
