@@ -8,6 +8,7 @@ using SharpShell.SharpPropertySheet;
 namespace HashPeek;
 
 [ComVisible(true)]
+[Guid("e2c4a1f7-5b8d-4a3e-9c60-7d1f2b6a8c34")]
 [COMServerAssociation(AssociationType.AllFiles)]
 public sealed class HashPropertySheet : SharpPropertySheet
 {

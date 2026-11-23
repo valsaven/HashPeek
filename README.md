@@ -27,23 +27,21 @@ The shell extension is `HashPeek\bin\Release\net48\HashPeek.dll`.
 
 ## Install
 
-Download `ServerRegistrationManager.zip` from the [SharpShell v2.7.2.0 release](https://github.com/dwmkerr/sharpshell/releases/tag/v2.7.2.0) (or install the `ServerRegistrationManager` NuGet package) and extract it somewhere, for example `C:\Tools\SharpShell`. SharpShell docs call this tool `srm`, but the actual executable is `ServerRegistrationManager.exe`. It requires administrator rights, so open PowerShell **as Administrator**.
-
-Register the DLL with the bitness of your Explorer process:
+No third-party installer is needed. SharpShell has a `[ComRegisterFunction]`, so the built-in `regasm.exe` from .NET Framework also registers the Explorer property sheet handler. Open PowerShell **as Administrator** (writing HKCR requires it) and run:
 
 ```powershell
-& 'C:\Tools\SharpShell\ServerRegistrationManager.exe' install 'G:\dev\HashPeek\HashPeek\bin\Release\net48\HashPeek.dll' -codebase -os64
+& "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\regasm.exe" /codebase 'G:\dev\HashPeek\HashPeek\bin\Release\net48\HashPeek.dll'
 ```
 
-Restart Explorer (or sign out) afterwards. `-codebase` means the DLL must stay at that path; do not move or delete it while registered. For 32-bit Explorer use `-os32`.
+`/codebase` means the DLL must stay at that path; do not move or delete it while registered. A warning about registering an unsigned assembly is expected and harmless for personal use. Restart Explorer (or sign out) afterwards.
 
 To uninstall:
 
 ```powershell
-& 'C:\Tools\SharpShell\ServerRegistrationManager.exe' uninstall 'G:\dev\HashPeek\HashPeek\bin\Release\net48\HashPeek.dll' -os64
+& "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\regasm.exe" /unregister 'G:\dev\HashPeek\HashPeek\bin\Release\net48\HashPeek.dll'
 ```
 
-Then restart Explorer again.
+Then restart Explorer again. Use the `Framework\v4.0.30319` path instead if Explorer is 32-bit. The optional SharpShell `ServerRegistrationManager.exe` tool works too (`install <dll> -codebase -os64`), but is not required.
 
 ## Usage
 
